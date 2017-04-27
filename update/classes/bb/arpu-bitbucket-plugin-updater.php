@@ -130,9 +130,9 @@ class Arpu_Bitbucket_Plugin_Updater {
      */
     public function bb_set_transient( $transient ) {
         // If we have checked the plugin data before, don't re-check
-//        if ( empty( $transient->checked ) ) {
-//            return $transient;
-//        }
+        if ( empty( $transient->checked ) ) {
+            return $transient;
+        }
 
         // default - don't update the plugin
         $do_update = 0;
