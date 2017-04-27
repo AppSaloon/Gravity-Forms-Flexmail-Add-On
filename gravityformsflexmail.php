@@ -29,6 +29,10 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 
 define( 'GF_FLEXMAIL_VERSION', '1.0' );
 
+if( !defined('GFORM_FIELD_DIR')){
+    define('GF_FLEXMAIL_DIR', dirname( __FILE__) .'/' );
+}
+
 // If Gravity Forms is loaded, bootstrap the Mailchimp Add-On.
 add_action( 'gform_loaded', array( 'GF_Flexmail_Bootstrap', 'load' ), 5 );
 
@@ -57,6 +61,7 @@ class GF_Flexmail_Bootstrap {
     }
 }
 
+
 /**
  * Returns an instance of the GFFlexmail class
  *
@@ -66,4 +71,33 @@ class GF_Flexmail_Bootstrap {
  */
 function gf_flexmail() {
     return GFFlexmail::get_instance();
+}
+
+/**
+ * Register autoloader
+ */
+add_action('init', 'autoloader');
+
+
+function autoloader() {
+    spl_autoload_register( 'gf_flexmail_autoload' );
+}
+
+/**
+ * Autoloader
+ *
+ * @param $class
+ */
+function gf_flexmail_autoload( $class ) {
+    if ( strpos( $class, 'gravityformsflexmail\\' ) === 0 ) {
+        $path = substr( $class, strlen( 'gravityformsflexmail\\' ) );
+        $path = strtolower( $path );
+        $path = str_replace( '_', '-', $path );
+        $path = str_replace( '\\', DIRECTORY_SEPARATOR, $path ) . '.php';
+        $path = __DIR__ . DIRECTORY_SEPARATOR . $path;
+
+        if ( file_exists( $path ) ) {
+            include $path;
+        }
+    }
 }
