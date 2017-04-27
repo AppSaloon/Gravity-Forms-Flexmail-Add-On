@@ -81,6 +81,7 @@ add_action('init', 'autoloader');
 
 function autoloader() {
     spl_autoload_register( 'gf_flexmail_autoload' );
+    new \gravityformsflexmail\update\Auto_Update();
 }
 
 /**
