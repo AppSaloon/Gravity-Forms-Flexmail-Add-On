@@ -109,18 +109,7 @@ class Arpu_Bitbucket_Plugin_Updater {
 
             $this->bb_api_result = $decoded_result;
 
-            // check if there are more pages
-            $page = ceil($decoded_result->size / $decoded_result->pagelen);
-
-            // get latest page
-            if( $page > 1 ) {
-                $result = $this->get_bb_data($url."?page=".$page);
-                if(  $result['response']['code'] == 200 ){
-                    $decoded_result = json_decode($result['body']);
-                    $this->bb_api_result = $decoded_result;
-                }
-            }
-
+            // first one is correct
             $latest_tag = current($decoded_result->values);
 
             $this->version = $latest_tag->name;
@@ -141,9 +130,9 @@ class Arpu_Bitbucket_Plugin_Updater {
      */
     public function bb_set_transient( $transient ) {
         // If we have checked the plugin data before, don't re-check
-        if ( empty( $transient->checked ) ) {
-            return $transient;
-        }
+//        if ( empty( $transient->checked ) ) {
+//            return $transient;
+//        }
 
         // default - don't update the plugin
         $do_update = 0;
@@ -156,7 +145,6 @@ class Arpu_Bitbucket_Plugin_Updater {
             // Check the versions if we need to do an update
             $do_update = version_compare( $this->check_version_name($this->version), $transient->checked[$this->slug] );
         }
-
 
         // Update the transient to include our updated plugin data
         if ( $do_update == 1 ) {
@@ -277,7 +265,7 @@ class Arpu_Bitbucket_Plugin_Updater {
     }
 
     public function get_tag_url(){
-        return "{$this->host}/2.0/repositories/{$this->project_name}/{$this->repo}/refs/tags";
+        return "{$this->host}/2.0/repositories/{$this->project_name}/{$this->repo}/refs/tags?sort=-target.date";
     }
 
     public function git_repository_is_live(){

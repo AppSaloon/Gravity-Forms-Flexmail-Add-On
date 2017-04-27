@@ -1,9 +1,9 @@
 <?php
 /**
 Plugin Name: Gravity Forms Flexmail Add-On
-Plugin URI: http://www.gravityforms.com
+Plugin URI: https://www.appsaloon.be
 Description: Integrates Gravity Forms with Flexmail, allowing form submissions to be automatically sent to your Flexmail account
-Version: 1.1.0
+Version: 1.1.1
 Author: AppSaloon
 Author URI: https://www.appsaloon.be
 Text Domain: gravityformsflexmail
@@ -29,7 +29,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 
 define( 'GF_FLEXMAIL_VERSION', '1.0' );
 
-if( !defined('GFORM_FIELD_DIR')){
+if( !defined('GF_FLEXMAIL_DIR')){
     define('GF_FLEXMAIL_DIR', dirname( __FILE__) .'/' );
 }
 

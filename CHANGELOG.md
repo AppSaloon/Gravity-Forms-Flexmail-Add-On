@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 1.1.1 - 27/04/2017
+- Fix auto-updater
+
 ## 1.1.0 - 27/04/2017
 - Added auto-updater via bitbucket
 
