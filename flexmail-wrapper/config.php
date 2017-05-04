@@ -4,11 +4,21 @@ $user_token = 'xxxxxxx-xxxxxxx-xxxxxxxx-xxxxxxx-xxxxxx';
 
 $option = get_option('gravityformsaddon_gravityformsflexmail_settings');
 
+// after first save
 if( $option )
 {
     $user_id = $option['apiUser'];
     $user_token = $option['apiKey'];
 }
+
+// first save
+if( isset( $_POST['_gaddon_setting_apiUser'] ) )
+    $user_id = $_POST['_gaddon_setting_apiUser'];
+
+if( isset( $_POST['_gaddon_setting_apiKey'] ) )
+    $user_token = $_POST['_gaddon_setting_apiKey'];
+
+
 
 // Set your API User Id. Can be found under the Profile tab on flexmail.eu
 define("FLEXMAIL_USER_ID", $user_id);

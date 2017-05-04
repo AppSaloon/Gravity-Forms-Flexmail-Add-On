@@ -1219,7 +1219,7 @@ class GFFlexmail extends GFFeedAddOn {
             if( $lists->header->errorCode !== 0 )
             {
                 // Log that authentication test failed.
-                $this->log_error( __METHOD__ . '(): Unable to authenticate with Flexmail; '. $e->getMessage() );
+                $this->log_error( __METHOD__ . '(): Unable to authenticate with Flexmail; '.$lists->header->errorMessage );
 
                 return false;
             }
@@ -1238,6 +1238,7 @@ class GFFlexmail extends GFFeedAddOn {
 
 		}
 
+		die;
 	}
 
 	/**
