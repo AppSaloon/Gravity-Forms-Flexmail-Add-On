@@ -31,7 +31,7 @@ namespace gravityformsflexmail;
 
 use gravityformsflexmail\update\Auto_Update;
 
-define( 'GF_FLEXMAIL_VERSION', '1.0' );
+define( 'GF_FLEXMAIL_VERSION', '1.2.0' );
 
 if( !defined('GF_FLEXMAIL_DIR')){
     define('GF_FLEXMAIL_DIR', dirname( __FILE__) .'/' );
