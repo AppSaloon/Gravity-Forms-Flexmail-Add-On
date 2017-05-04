@@ -3,7 +3,7 @@
 Plugin Name: Gravity Forms Flexmail Add-On
 Plugin URI: https://www.appsaloon.be
 Description: Integrates Gravity Forms with Flexmail, allowing form submissions to be automatically sent to your Flexmail account
-Version: 1.1.1
+Version: 1.2.0
 Author: AppSaloon
 Author URI: https://www.appsaloon.be
 Text Domain: gravityformsflexmail
@@ -27,21 +27,30 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  **/
 
+namespace gravityformsflexmail;
+
+use gravityformsflexmail\update\Auto_Update;
+
 define( 'GF_FLEXMAIL_VERSION', '1.0' );
 
 if( !defined('GF_FLEXMAIL_DIR')){
     define('GF_FLEXMAIL_DIR', dirname( __FILE__) .'/' );
 }
 
-// If Gravity Forms is loaded, bootstrap the Mailchimp Add-On.
-add_action( 'gform_loaded', array( 'GF_Flexmail_Bootstrap', 'load' ), 5 );
+class Gravityformsflexmail
+{
 
-/**
- * Class GF_MailChimp_Bootstrap
- *
- * Handles the loading of the Mailchimp Add-On and registers with the Add-On Framework.
- */
-class GF_Flexmail_Bootstrap {
+    public function __construct()
+    {
+        // set autoloader
+        $this->set_autoloader();
+
+        // load gf settings
+        add_action( 'gform_loaded', array( $this, 'load' ), 5 );
+
+        // check updates
+        new Auto_Update();
+    }
 
     /**
      * If the Feed Add-On Framework exists, Mailchimp Add-On is loaded.
@@ -49,7 +58,7 @@ class GF_Flexmail_Bootstrap {
      * @access public
      * @static
      */
-    public static function load() {
+    public function load() {
 
         if ( ! method_exists( 'GFForms', 'include_feed_addon_framework' ) ) {
             return;
@@ -57,48 +66,46 @@ class GF_Flexmail_Bootstrap {
 
         require_once( 'class-gf-flexmail.php' );
 
-        GFAddOn::register( 'GFFlexmail' );
+        \GFAddOn::register( 'GFFlexmail' );
+    }
+
+    /**
+     * Set autoloader
+     */
+    public function set_autoloader()
+    {
+        spl_autoload_register( array($this, 'gf_flexmail_autoload') );
+    }
+
+    /**
+     * Autoloader
+     *
+     * @param $class
+     */
+    public function gf_flexmail_autoload( $class ) {
+        if ( strpos( $class, 'gravityformsflexmail\\' ) === 0 ) {
+            $path = substr( $class, strlen( 'gravityformsflexmail\\' ) );
+            $path = strtolower( $path );
+            $path = str_replace( '_', '-', $path );
+            $path = str_replace( '\\', DIRECTORY_SEPARATOR, $path ) . '.php';
+            $path = __DIR__ . DIRECTORY_SEPARATOR . $path;
+
+            if ( file_exists( $path ) ) {
+                include $path;
+            }
+        }
     }
 }
 
+new Gravityformsflexmail();
 
 /**
  * Returns an instance of the GFFlexmail class
  *
- * @see    GFMailChimp::get_instance()
+ * @see    GFFlexmail::get_instance()
  *
  * @return object GFFlexmail
  */
 function gf_flexmail() {
-    return GFFlexmail::get_instance();
-}
-
-/**
- * Register autoloader
- */
-add_action('init', 'autoloader');
-
-
-function autoloader() {
-    spl_autoload_register( 'gf_flexmail_autoload' );
-    new \gravityformsflexmail\update\Auto_Update();
-}
-
-/**
- * Autoloader
- *
- * @param $class
- */
-function gf_flexmail_autoload( $class ) {
-    if ( strpos( $class, 'gravityformsflexmail\\' ) === 0 ) {
-        $path = substr( $class, strlen( 'gravityformsflexmail\\' ) );
-        $path = strtolower( $path );
-        $path = str_replace( '_', '-', $path );
-        $path = str_replace( '\\', DIRECTORY_SEPARATOR, $path ) . '.php';
-        $path = __DIR__ . DIRECTORY_SEPARATOR . $path;
-
-        if ( file_exists( $path ) ) {
-            include $path;
-        }
-    }
+    return \GFFlexmail::get_instance();
 }

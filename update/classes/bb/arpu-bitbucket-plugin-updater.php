@@ -8,6 +8,7 @@ class Arpu_Bitbucket_Plugin_Updater {
     private $slug; // plugin slug
     private $real_slug; // plugin real slug
     private $plugin_data; // plugin data
+    private $plugin_slug;
     private $host;
     private $download_host;
     private $username; // Bitbucket username
@@ -17,9 +18,8 @@ class Arpu_Bitbucket_Plugin_Updater {
     private $plugin_file; // __FILE__ of our plugin
     private $bb_api_result; // holds data from Bitbucket
     private $version;
-    private $commit;
-    private $commit_message;
     private $commit_date;
+    private $change_log;
     private $plugin_activated;
     private $download_link;
 
@@ -31,6 +31,7 @@ class Arpu_Bitbucket_Plugin_Updater {
      */
     function __construct( $bb_plugin ) {
         $this->plugin_file = $bb_plugin['plugin_file'];
+        $this->plugin_slug = $bb_plugin['plugin_slug'];
         $this->host = $bb_plugin['bb_host'];
         $this->download_host = $bb_plugin['bb_download_host'];
         $this->username = $bb_plugin['bb_owner'];
@@ -48,7 +49,7 @@ class Arpu_Bitbucket_Plugin_Updater {
 
     /**
      * Add bitbucket credentials to request url
-     * 
+     *
      * @param $r
      * @param $url
      * @return mixed
@@ -112,10 +113,17 @@ class Arpu_Bitbucket_Plugin_Updater {
             // first one is correct
             $latest_tag = current($decoded_result->values);
 
+            $changelog = $this->get_changelog_content($latest_tag->target->hash);
+
+            if( $changelog !== false )
+            {
+                $this->change_log = $changelog;
+            }else{
+                $this->change_log = $latest_tag->target->message;
+            }
+
             $this->version = $latest_tag->name;
-            $this->commit = $latest_tag->target->parents[0]->hash;
-            $this->commit_message = $latest_tag->target->message;
-            $this->commit_date = date('Y-m-d', strtotime($latest_tag->target->date));
+            $this->commit_date = date('Y-m-d H:i:s', strtotime($latest_tag->target->date));
         }
     }
 
@@ -168,59 +176,60 @@ class Arpu_Bitbucket_Plugin_Updater {
      * + pass update plugin data to wordpress
      */
     public function bb_set_plugin_info( $false, $action, $response ) {
-        // Get plugin & Bitbucket release information
-        $this->init_plugin_data();
+        if ( 'plugin_information' == $action && $response->slug == $this->plugin_slug)
+        {
+            // Get plugin & Bitbucket release information
+            $this->init_plugin_data();
 
-        if( $this->git_repository_is_live() ){
-            $this->get_repo_release_info();
+            if( $this->git_repository_is_live() ){
+                $this->get_repo_release_info();
 
-            // If nothing is found, do nothing
-            if ( empty( $response->slug ) || $response->slug != $this->real_slug ) {
-                return $false;
-            }
+                // Add our plugin information
+                $response->last_updated = $this->commit_date;
+                $response->slug = $this->real_slug;
+                $response->plugin_name  = $this->plugin_data["Name"];
+                $response->version = $this->version;
+                $response->author = $this->plugin_data["AuthorName"];
+                $response->homepage = "https://www.appsaloon.be";
+                $response->name = $this->plugin_data['Name'];
 
-            // Add our plugin information
-            $response->last_updated = $this->commit_date;
-            $response->slug = $this->real_slug;
-            $response->plugin_name  = $this->plugin_data["Name"];
-            $response->version = $this->version;
-            $response->author = $this->plugin_data["AuthorName"];
-            $response->homepage = "https://www.appsaloon.be";
-            $response->name = $this->plugin_data['Name'];
+                // This is our release download zip file
+                $response->download_link = $this->get_download_url();
 
-            // This is our release download zip file
-            $response->download_link = $this->get_download_url();
+                // Create tabs in the lightbox
+                $response->sections = array(
+                    'description' => $this->plugin_data["Description"],
+                    'changelog' => Parsedown::instance()->parse( $this->change_log )
+                );
 
-            // Create tabs in the lightbox
-            $response->sections = array(
-                'description' => $this->plugin_data["Description"],
-                'changelog' => Parsedown::instance()->parse( $this->commit_message )
-            );
-
-            // Gets the required version of WP if available
-            $matches = null;
-            preg_match( "/requires:\s([\d\.]+)/i", $this->commit_message, $matches );
-            if ( ! empty( $matches ) ) {
-                if ( is_array( $matches ) ) {
-                    if ( count( $matches ) > 1 ) {
-                        $response->requires = $matches[1];
+                // Gets the required version of WP if available
+                $matches = null;
+                preg_match( "/requires:\s([\d\.]+)/i", $this->change_log, $matches );
+                if ( ! empty( $matches ) ) {
+                    if ( is_array( $matches ) ) {
+                        if ( count( $matches ) > 1 ) {
+                            $response->requires = $matches[1];
+                        }
                     }
                 }
-            }
 
-            // Gets the tested version of WP if available
-            $matches = null;
-            preg_match( "/tested:\s([\d\.]+)/i", $this->commit_message, $matches );
-            if ( ! empty( $matches ) ) {
-                if ( is_array( $matches ) ) {
-                    if ( count( $matches ) > 1 ) {
-                        $response->tested = $matches[1];
+                // Gets the tested version of WP if available
+                $matches = null;
+                preg_match( "/tested:\s([\d\.]+)/i", $this->change_log, $matches );
+                if ( ! empty( $matches ) ) {
+                    if ( is_array( $matches ) ) {
+                        if ( count( $matches ) > 1 ) {
+                            $response->tested = $matches[1];
+                        }
                     }
                 }
+
+                return $response;
             }
         }
 
-        return $response;
+
+        return $false;
     }
 
     /**
@@ -269,15 +278,38 @@ class Arpu_Bitbucket_Plugin_Updater {
     }
 
     public function git_repository_is_live(){
-        $headers = array( 'Authorization' => 'Basic ' . base64_encode( $this->username.":".$this->password ) );
         $new_url = $this->host."/2.0/repositories/".$this->project_name."/".$this->repo;
 
-        $request = wp_remote_get($new_url, array( 'headers' => $headers ));
+        $request = wp_remote_get($new_url, array( 'headers' => $this->get_headers() ));
 
         if( !is_wp_error($request) && $request['response']['code'] == 200 ){
             return true;
         }
 
         return false;
+    }
+
+    protected function get_headers()
+    {
+        return array( 'Authorization' => 'Basic ' . base64_encode( $this->username.":".$this->password ) );
+    }
+
+    /**
+     * Get content of changelog.md file from bitbucket
+     *
+     * @param $commit_hash
+     * @return string content of changelog
+     *          bool    false if wp errors
+     */
+    protected function get_changelog_content($commit_hash)
+    {
+        $changelog = wp_remote_get('https://bitbucket.org/'.$this->project_name.'/'.$this->repo.'/raw/'.$commit_hash.'/CHANGELOG.md',  array('headers' => $this->get_headers()));
+
+        if( is_wp_error($changelog) )
+        {
+            return false;
+        }
+
+        return $changelog['body'];
     }
 }

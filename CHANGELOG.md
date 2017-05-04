@@ -1,5 +1,12 @@
 # CHANGELOG
 
+requires: 4.7.4
+tested: 4.7.4
+
+## 1.2.0 - 04/05/2017
+- Fix auto-updater not via gravityforms add-on framework
+- Using CHANGELOG.md for plugin update information
+
 ## 1.1.1 - 27/04/2017
 - Fix auto-updater
 

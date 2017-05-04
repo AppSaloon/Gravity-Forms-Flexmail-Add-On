@@ -100,7 +100,7 @@ class GFFlexmail extends GFFeedAddOn {
 	 * @access protected
 	 * @var    bool
 	 */
-	protected $_enable_rg_autoupgrade = true;
+	protected $_enable_rg_autoupgrade = false;
 
 	/**
 	 * Defines the capabilities needed for the Flexmail Add-On
@@ -1287,3 +1287,5 @@ class GFFlexmail extends GFFeedAddOn {
 	}
 
 }
+
+new \gravityformsflexmail\update\Auto_Update();

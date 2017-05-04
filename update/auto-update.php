@@ -16,6 +16,7 @@ Class Auto_Update{
     public function arpu_bb_handle_updates(){
         $bb_plugin = array(
             'plugin_file' => GF_FLEXMAIL_DIR . 'gravityformsflexmail.php',
+            'plugin_slug' => 'gravityformsflexmail',
             'bb_host' => 'https://api.bitbucket.org',
             'bb_download_host' => 'http://bitbucket.org',
             'bb_owner' => 'appsaloonupdater',
