@@ -1,7 +1,11 @@
 # CHANGELOG
 
 requires: 4.7.4
-tested: 4.7.4
+tested: 5.0.3
+
+## 1.2.1
+- Fix warning error code after api call
+- Fix auto-updater
 
 ## 1.2.0 - 04/05/2017
 - Fix auto-updater not via gravityforms add-on framework
