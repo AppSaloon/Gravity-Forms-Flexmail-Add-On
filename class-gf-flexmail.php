@@ -1018,7 +1018,6 @@ class GFFlexmail extends GFFeedAddOn {
 			$this->log_debug( __METHOD__ . "(): Subscriber successfully {$transaction}." );
 
 		} catch ( Exception $e ) {
-		    var_dump( $e );
 			// Log that subscription could not be added or updated.
 			$this->add_feed_error( sprintf( esc_html__( 'Unable to add/update subscriber: %s', 'gravityformsflexmail' ), $e->getMessage() ), $feed, $entry, $form );
 

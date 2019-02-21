@@ -49,7 +49,7 @@ class Gravityformsflexmail
         add_action( 'gform_loaded', array( $this, 'load' ), 5 );
 
         // check updates
-        new Auto_Update();
+//        new Auto_Update();
     }
 
     /**
