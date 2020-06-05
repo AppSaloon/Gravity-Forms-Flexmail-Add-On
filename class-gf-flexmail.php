@@ -1287,5 +1287,3 @@ class GFFlexmail extends GFFeedAddOn {
 	}
 
 }
-
-new \gravityformsflexmail\update\Auto_Update();
