@@ -159,10 +159,10 @@ class GFFlexmail extends GFFeedAddOn {
 	/**
 	 * Get an instance of this class.
 	 *
+	 * @return GFFlexmail
 	 * @since  3.0
 	 * @access public
 	 *
-	 * @return GFFlexmail
 	 */
 	public static function get_instance() {
 
@@ -211,7 +211,8 @@ class GFFlexmail extends GFFeedAddOn {
 
 		$this->add_delayed_payment_support(
 			array(
-				'option_label' => esc_html__( 'Subscribe user to Flexmail only when payment is received.', 'gravityformsflexmail' ),
+				'option_label' => esc_html__( 'Subscribe user to Flexmail only when payment is received.',
+					'gravityformsflexmail' ),
 			)
 		);
 
@@ -236,10 +237,10 @@ class GFFlexmail extends GFFeedAddOn {
 	/**
 	 * Register needed styles.
 	 *
+	 * @return array
 	 * @since  4.0
 	 * @access public
 	 *
-	 * @return array
 	 */
 	public function styles() {
 
@@ -265,21 +266,22 @@ class GFFlexmail extends GFFeedAddOn {
 	/**
 	 * Configures the settings which should be rendered on the add-on settings tab.
 	 *
+	 * @return array
 	 * @since  3.0
 	 * @access public
 	 *
-	 * @return array
 	 */
 	public function plugin_settings_fields() {
 
 		return array(
 			array(
 				'description' => '<p>' .
-					sprintf(
-						esc_html__( 'Flexmail makes it easy to send email newsletters to your customers, manage your subscriber lists, and track campaign performance. Use Gravity Forms to collect customer information and automatically add it to your Flexmail subscriber list. If you don\'t have a Flexmail account, you can %1$ssign up for one here.%2$s', 'gravityformsflexmail' ),
-						'<a href="http://www.flexmail.com/" target="_blank">', '</a>'
-					)
-					. '</p>',
+				                 sprintf(
+					                 esc_html__( 'Flexmail makes it easy to send email newsletters to your customers, manage your subscriber lists, and track campaign performance. Use Gravity Forms to collect customer information and automatically add it to your Flexmail subscriber list. If you don\'t have a Flexmail account, you can %1$ssign up for one here.%2$s',
+						                 'gravityformsflexmail' ),
+					                 '<a href="http://www.flexmail.com/" target="_blank">', '</a>'
+				                 )
+				                 . '</p>',
 				'fields'      => array(
 					array(
 						'name'              => 'apiUser',
@@ -288,13 +290,13 @@ class GFFlexmail extends GFFeedAddOn {
 						'class'             => 'medium',
 						'feedback_callback' => array( $this, 'initialize_api' ),
 					),
-                    array(
-                        'name'              => 'apiKey',
-                        'label'             => esc_html__( 'Flexmail API Key', 'gravityformsflexmail' ),
-                        'type'              => 'text',
-                        'class'             => 'medium',
-                        'feedback_callback' => array( $this, 'initialize_api' ),
-                    )
+					array(
+						'name'              => 'apiKey',
+						'label'             => esc_html__( 'Flexmail API Key', 'gravityformsflexmail' ),
+						'type'              => 'text',
+						'class'             => 'medium',
+						'feedback_callback' => array( $this, 'initialize_api' ),
+					),
 				),
 			),
 		);
@@ -310,10 +312,10 @@ class GFFlexmail extends GFFeedAddOn {
 	/**
 	 * Configures the settings which should be rendered on the feed edit page.
 	 *
+	 * @return array
 	 * @since  3.0
 	 * @access public
 	 *
-	 * @return array
 	 */
 	public function feed_settings_fields() {
 
@@ -346,22 +348,23 @@ class GFFlexmail extends GFFeedAddOn {
 					),
 				),
 			),
-            array(
-               'dependency' => 'flexmailCategories',
-                'fields' => array(
-                    array(
-                        'name'     => 'flexmailList',
-                        'label'    => esc_html__( 'Flexmail List', 'gravityformsflexmail' ),
-                        'type'     => 'flexmail_list',
-                        'required' => true,
-                        'tooltip'  => sprintf(
-                            '<h6>%s</h6>%s',
-                            esc_html__( 'Flexmail List', 'gravityformsflexmail' ),
-                            esc_html__( 'Select the Flexmail list you would like to add your contacts to.', 'gravityformsflexmail' )
-                        ),
-                    )
-                ),
-            ),
+			array(
+				'dependency' => 'flexmailCategories',
+				'fields'     => array(
+					array(
+						'name'     => 'flexmailList',
+						'label'    => esc_html__( 'Flexmail List', 'gravityformsflexmail' ),
+						'type'     => 'flexmail_list',
+						'required' => true,
+						'tooltip'  => sprintf(
+							'<h6>%s</h6>%s',
+							esc_html__( 'Flexmail List', 'gravityformsflexmail' ),
+							esc_html__( 'Select the Flexmail list you would like to add your contacts to.',
+								'gravityformsflexmail' )
+						),
+					),
+				),
+			),
 			array(
 				'dependency' => 'flexmailList',
 				'fields'     => array(
@@ -373,7 +376,8 @@ class GFFlexmail extends GFFeedAddOn {
 						'tooltip'   => sprintf(
 							'<h6>%s</h6>%s',
 							esc_html__( 'Map Fields', 'gravityformsflexmail' ),
-							esc_html__( 'Associate your Flexmail merge tags to the appropriate Gravity Form fields by selecting the appropriate form field from the list.', 'gravityformsflexmail' )
+							esc_html__( 'Associate your Flexmail merge tags to the appropriate Gravity Form fields by selecting the appropriate form field from the list.',
+								'gravityformsflexmail' )
 						),
 					),
 //					array(
@@ -389,7 +393,8 @@ class GFFlexmail extends GFFeedAddOn {
 						'tooltip' => sprintf(
 							'<h6>%s</h6>%s',
 							esc_html__( 'Conditional Logic', 'gravityformsflexmail' ),
-							esc_html__( 'When conditional logic is enabled, form submissions will only be exported to Flexmail when the conditions are met. When disabled all form submissions will be exported.', 'gravityformsflexmail' )
+							esc_html__( 'When conditional logic is enabled, form submissions will only be exported to Flexmail when the conditions are met. When disabled all form submissions will be exported.',
+								'gravityformsflexmail' )
 						),
 					),
 					array( 'type' => 'save' ),
@@ -399,127 +404,129 @@ class GFFlexmail extends GFFeedAddOn {
 
 	}
 
-    /**
-     * Define the markup for the flexmail_list type field.
-     *
-     * @since  3.0
-     * @access public
-     *
-     * @param array $field The field properties.
-     * @param bool  $echo  Should the setting markup be echoed. Defaults to true.
-     *
-     * @return string
-     */
-    public function settings_flexmail_category( $field, $echo = true ) {
+	/**
+	 * Define the markup for the flexmail_list type field.
+	 *
+	 * @param  array  $field  The field properties.
+	 * @param  bool  $echo  Should the setting markup be echoed. Defaults to true.
+	 *
+	 * @return string
+	 * @since  3.0
+	 * @access public
+	 *
+	 */
+	public function settings_flexmail_category( $field, $echo = true ) {
 
-        // Initialize HTML string.
-        $html = '';
+		// Initialize HTML string.
+		$html = '';
 
-        // If API is not initialized, return.
-        if ( ! $this->initialize_api() ) {
-            return $html;
-        }
+		// If API is not initialized, return.
+		if ( ! $this->initialize_api() ) {
+			return $html;
+		}
 
-        // Prepare list request parameters.
-        $params = array( 'start' => 0, 'limit' => 100 );
+		// Prepare list request parameters.
+		$params = array( 'start' => 0, 'limit' => 100 );
 
-        // Filter parameters.
-        $params = apply_filters( 'gform_flexmail_lists_params', $params );
+		// Filter parameters.
+		$params = apply_filters( 'gform_flexmail_lists_params', $params );
 
-        // Convert start parameter to 3.0.
-        if ( isset( $params['start'] ) ) {
-            $params['offset'] = $params['start'];
-            unset( $params['start'] );
-        }
+		// Convert start parameter to 3.0.
+		if ( isset( $params['start'] ) ) {
+			$params['offset'] = $params['start'];
+			unset( $params['start'] );
+		}
 
-        // Convert limit parameter to 3.0.
-        if ( isset( $params['limit'] ) ) {
-            $params['count'] = $params['limit'];
-            unset( $params['limit'] );
-        }
+		// Convert limit parameter to 3.0.
+		if ( isset( $params['limit'] ) ) {
+			$params['count'] = $params['limit'];
+			unset( $params['limit'] );
+		}
 
-        try {
+		try {
 
-            // Log contact lists request parameters.
-            $this->log_debug( __METHOD__ . '(): Retrieving contact lists; params: ' . print_r( $params, true ) );
+			// Log contact lists request parameters.
+			$this->log_debug( __METHOD__ . '(): Retrieving contact lists; params: ' . print_r( $params, true ) );
 
-            // Get lists.
-            $category_api = new FlexmailAPI_Category();
-            $category = $category_api->getAll();
+			// Get lists.
+			$category_api = new FlexmailAPI_Category();
+			$category     = $category_api->getAll();
 
-        } catch ( Exception $e ) {
+		} catch ( Exception $e ) {
 
-            // Log that contact lists could not be obtained.
-            $this->log_error( __METHOD__ . '(): Could not retrieve Flexmail contact lists; ' . $e->getMessage() );
+			// Log that contact lists could not be obtained.
+			$this->log_error( __METHOD__ . '(): Could not retrieve Flexmail contact lists; ' . $e->getMessage() );
 
-            // Display error message.
-            printf( esc_html__( 'Could not load Flexmail contact lists. %sError: %s', 'gravityformsflexmail' ), '<br/>', $e->getMessage() );
+			// Display error message.
+			printf( esc_html__( 'Could not load Flexmail contact lists. %sError: %s', 'gravityformsflexmail' ), '<br/>',
+				$e->getMessage() );
 
-            return;
+			return;
 
-        }
+		}
 
-        // If no lists were found, display error message.
-        if ( 0 === sizeof($category->categoryTypeItems) ) {
+		// If no lists were found, display error message.
+		if ( 0 === sizeof( $category->categoryTypeItems ) ) {
 
-            // Log that no lists were found.
-            $this->log_error( __METHOD__ . '(): Could not load Flexmail contact lists; no categories found.' );
+			// Log that no lists were found.
+			$this->log_error( __METHOD__ . '(): Could not load Flexmail contact lists; no categories found.' );
 
-            // Display error message.
-            printf( esc_html__( 'Could not load Flexmail categories. %sError: %s', 'gravityformsflexmail' ), '<br/>', esc_html__( 'No categories found.', 'gravityformsflexmail' ) );
+			// Display error message.
+			printf( esc_html__( 'Could not load Flexmail categories. %sError: %s', 'gravityformsflexmail' ), '<br/>',
+				esc_html__( 'No categories found.', 'gravityformsflexmail' ) );
 
-            return;
+			return;
 
-        }
+		}
 
-        // Log number of lists retrieved.
-        $this->log_debug( __METHOD__ . '(): Number of lists: ' . count( $category->categoryTypeItems ) );
+		// Log number of lists retrieved.
+		$this->log_debug( __METHOD__ . '(): Number of lists: ' . count( $category->categoryTypeItems ) );
 
-        // Initialize select options.
-        $options = array(
-            array(
-                'label' => esc_html__( 'Select a Flexmail categories', 'gravityformsflexmail' ),
-                'value' => '',
-            ),
-        );
+		// Initialize select options.
+		$options = array(
+			array(
+				'label' => esc_html__( 'Select a Flexmail categories', 'gravityformsflexmail' ),
+				'value' => '',
+			),
+		);
 
-        // Loop through Flexmail lists.
-        foreach ( $category->categoryTypeItems as $cat ) {
+		// Loop through Flexmail lists.
+		foreach ( $category->categoryTypeItems as $cat ) {
 
-            // Add list to select options.
-            $options[] = array(
-                'label' => esc_html( $cat->categoryName ),
-                'value' => esc_attr( $cat->categoryId ),
-            );
+			// Add list to select options.
+			$options[] = array(
+				'label' => esc_html( $cat->categoryName ),
+				'value' => esc_attr( $cat->categoryId ),
+			);
 
-        }
+		}
 
-        // Add select field properties.
-        $field['type']     = 'select';
-        $field['choices']  = $options;
-        $field['onchange'] = 'jQuery(this).parents("form").submit();';
+		// Add select field properties.
+		$field['type']     = 'select';
+		$field['choices']  = $options;
+		$field['onchange'] = 'jQuery(this).parents("form").submit();';
 
-        // Generate select field.
-        $html = $this->settings_select( $field, false );
+		// Generate select field.
+		$html = $this->settings_select( $field, false );
 
-        if ( $echo ) {
-            echo $html;
-        }
+		if ( $echo ) {
+			echo $html;
+		}
 
-        return $html;
+		return $html;
 
-    }
+	}
 
 	/**
 	 * Define the markup for the flexmail_list type field.
 	 *
+	 * @param  array  $field  The field properties.
+	 * @param  bool  $echo  Should the setting markup be echoed. Defaults to true.
+	 *
+	 * @return string
 	 * @since  3.0
 	 * @access public
 	 *
-	 * @param array $field The field properties.
-	 * @param bool  $echo  Should the setting markup be echoed. Defaults to true.
-	 *
-	 * @return string
 	 */
 	public function settings_flexmail_list( $field, $echo = true ) {
 
@@ -554,21 +561,21 @@ class GFFlexmail extends GFFeedAddOn {
 			// Log contact lists request parameters.
 			$this->log_debug( __METHOD__ . '(): Retrieving contact lists; params: ' . print_r( $params, true ) );
 
-            $flex_category_id = $this->get_setting( 'flexmailCategories' );
+			$flex_category_id = $this->get_setting( 'flexmailCategories' );
 
-            $list_api = new FlexmailAPI_List();
-            $lists = $list_api->getAll(array('categoryId' => $flex_category_id));
+			$list_api = new FlexmailAPI_List();
+			$lists    = $list_api->getAll( array( 'categoryId' => $flex_category_id ) );
 
-            if( $lists->header->errorCode !== 0 )
-            {
-                // Log that contact lists could not be obtained.
-                $this->log_error( __METHOD__ . '(): Could not retrieve Flexmail contact lists; ' . $lists->header->errorMessage );
+			if ( $lists->header->errorCode !== 0 ) {
+				// Log that contact lists could not be obtained.
+				$this->log_error( __METHOD__ . '(): Could not retrieve Flexmail contact lists; ' . $lists->header->errorMessage );
 
-                // Display error message.
-                printf( esc_html__( 'Could not load Flexmail contact lists. %sError: %s', 'gravityformsflexmail' ), '<br/>', $lists->header->errorMessage );
+				// Display error message.
+				printf( esc_html__( 'Could not load Flexmail contact lists. %sError: %s', 'gravityformsflexmail' ),
+					'<br/>', $lists->header->errorMessage );
 
-                return;
-            }
+				return;
+			}
 
 		} catch ( Exception $e ) {
 
@@ -576,20 +583,22 @@ class GFFlexmail extends GFFeedAddOn {
 			$this->log_error( __METHOD__ . '(): Could not retrieve Flexmail contact lists; ' . $e->getMessage() );
 
 			// Display error message.
-			printf( esc_html__( 'Could not load Flexmail contact lists. %sError: %s', 'gravityformsflexmail' ), '<br/>', $e->getMessage() );
+			printf( esc_html__( 'Could not load Flexmail contact lists. %sError: %s', 'gravityformsflexmail' ), '<br/>',
+				$e->getMessage() );
 
 			return;
 
 		}
 
 		// If no lists were found, display error message.
-		if ( 0 === sizeof($lists->mailingListTypeItems) ) {
+		if ( 0 === sizeof( $lists->mailingListTypeItems ) ) {
 
 			// Log that no lists were found.
 			$this->log_error( __METHOD__ . '(): Could not load Flexmail contact lists; no lists found.' );
 
 			// Display error message.
-			printf( esc_html__( 'Could not load Flexmail contact lists. %sError: %s', 'gravityformsflexmail' ), '<br/>', esc_html__( 'No lists found.', 'gravityformsflexmail' ) );
+			printf( esc_html__( 'Could not load Flexmail contact lists. %sError: %s', 'gravityformsflexmail' ), '<br/>',
+				esc_html__( 'No lists found.', 'gravityformsflexmail' ) );
 
 			return;
 
@@ -636,89 +645,205 @@ class GFFlexmail extends GFFeedAddOn {
 	/**
 	 * Return an array of Flexmail list fields which can be mapped to the Form fields/entry meta.
 	 *
+	 * @return array
 	 * @since  3.0
 	 * @access public
 	 *
-	 * @return array
 	 */
 	public function merge_vars_field_map() {
 
-        // Initialize field map array.
-        $field_map = array(
-            'EMAIL' => array(
-                'name'       => 'EMAIL',
-                'label'      => esc_html__( 'Email Address', 'gravityformsmailchimp' ),
-                'required'   => true,
-                'field_type' => array( 'email', 'hidden' ),
-            ),
-        );
+		// Initialize field map array.
+		$field_map = array(
+			'EMAIL' => array(
+				'name'       => 'EMAIL',
+				'label'      => esc_html__( 'Email Address', 'gravityformsmailchimp' ),
+				'required'   => true,
+				'field_type' => array( 'email', 'hidden' ),
+			),
+		);
 
-        // If unable to initialize API, return field map.
-        if ( ! $this->initialize_api() ) {
-            return $field_map;
-        }
+		// If unable to initialize API, return field map.
+		if ( ! $this->initialize_api() ) {
+			return $field_map;
+		}
 
-        $merge_fields = array();
-        $merge_fields[] = array('tag' => 'title', 'name' => __('Title', 'gravityformsmailchimp'), 'required' => false, 'type' => null);
-        $merge_fields[] = array('tag' => 'name', 'name' => __('Name', 'gravityformsmailchimp'), 'required' => false, 'type' => null);
-        $merge_fields[] = array('tag' => 'surname', 'name' => __('Surname', 'gravityformsmailchimp'), 'required' => false, 'type' => null);
-        $merge_fields[] = array('tag' => 'address', 'name' => __('Address', 'gravityformsmailchimp'), 'required' => false, 'type' => 'address');
-        $merge_fields[] = array('tag' => 'zipcode', 'name' => __('Zipcode', 'gravityformsmailchimp'), 'required' => false, 'type' => 'address');
-        $merge_fields[] = array('tag' => 'city', 'name' => __('City', 'gravityformsmailchimp'), 'required' => false, 'type' => 'address');
-        $merge_fields[] = array('tag' => 'country', 'name' => __('Country', 'gravityformsmailchimp'), 'required' => false, 'type' => 'address');
-        $merge_fields[] = array('tag' => 'phone', 'name' => __('Phone', 'gravityformsmailchimp'), 'required' => false, 'type' => null);
-        $merge_fields[] = array('tag' => 'fax', 'name' => __('Fax', 'gravityformsmailchimp'), 'required' => false, 'type' => null);
-        $merge_fields[] = array('tag' => 'mobile', 'name' => __('Mobile', 'gravityformsmailchimp'), 'required' => false, 'type' => null);
-        $merge_fields[] = array('tag' => 'website', 'name' => __('Website', 'gravityformsmailchimp'), 'required' => false, 'type' => null);
-        $merge_fields[] = array('tag' => 'language', 'name' => __('Language', 'gravityformsmailchimp'), 'required' => false, 'type' => null);
-        $merge_fields[] = array('tag' => 'gender', 'name' => __('Gender', 'gravityformsmailchimp'), 'required' => false, 'type' => null);
-        $merge_fields[] = array('tag' => 'birthday', 'name' => __('Birthday', 'gravityformsmailchimp'), 'required' => false, 'type' => null);
-        $merge_fields[] = array('tag' => 'company', 'name' => __('Company', 'gravityformsmailchimp'), 'required' => false, 'type' => null);
-        $merge_fields[] = array('tag' => 'function', 'name' => __('Function', 'gravityformsmailchimp'), 'required' => false, 'type' => null);
-        $merge_fields[] = array('tag' => 'market', 'name' => __('Market', 'gravityformsmailchimp'), 'required' => false, 'type' => null);
-        $merge_fields[] = array('tag' => 'employees', 'name' => __('Employees', 'gravityformsmailchimp'), 'required' => false, 'type' => null);
-        $merge_fields[] = array('tag' => 'nace', 'name' => __('Nace', 'gravityformsmailchimp'), 'required' => false, 'type' => null);
-        $merge_fields[] = array('tag' => 'turnover', 'name' => __('Turnover', 'gravityformsmailchimp'), 'required' => false, 'type' => null);
-        $merge_fields[] = array('tag' => 'vat', 'name' => __('Vat', 'gravityformsmailchimp'), 'required' => false, 'type' => null);
-        $merge_fields[] = array('tag' => 'keywords', 'name' => __('Keywords', 'gravityformsmailchimp'), 'required' => false, 'type' => null);
-        $merge_fields[] = array('tag' => 'free_field_1', 'name' => __('free_field_1', 'gravityformsmailchimp'), 'required' => false, 'type' => null);
-        $merge_fields[] = array('tag' => 'free_field_2', 'name' => __('free_field_2', 'gravityformsmailchimp'), 'required' => false, 'type' => null);
-        $merge_fields[] = array('tag' => 'free_field_3', 'name' => __('free_field_3', 'gravityformsmailchimp'), 'required' => false, 'type' => null);
-        $merge_fields[] = array('tag' => 'free_field_4', 'name' => __('free_field_4', 'gravityformsmailchimp'), 'required' => false, 'type' => null);
-        $merge_fields[] = array('tag' => 'free_field_5', 'name' => __('free_field_5', 'gravityformsmailchimp'), 'required' => false, 'type' => null);
-        $merge_fields[] = array('tag' => 'free_field_6', 'name' => __('free_field_6', 'gravityformsmailchimp'), 'required' => false, 'type' => null);
-        $merge_fields[] = array('tag' => 'barcode', 'name' => __('Barcode', 'gravityformsmailchimp'), 'required' => false, 'type' => null);
+		$merge_fields   = array();
+		$merge_fields[] = array( 'tag'      => 'title',
+		                         'name'     => __( 'Title', 'gravityformsmailchimp' ),
+		                         'required' => false,
+		                         'type'     => null,
+		);
+		$merge_fields[] = array( 'tag'      => 'name',
+		                         'name'     => __( 'Name', 'gravityformsmailchimp' ),
+		                         'required' => false,
+		                         'type'     => null,
+		);
+		$merge_fields[] = array( 'tag'      => 'surname',
+		                         'name'     => __( 'Surname', 'gravityformsmailchimp' ),
+		                         'required' => false,
+		                         'type'     => null,
+		);
+		$merge_fields[] = array( 'tag'      => 'address',
+		                         'name'     => __( 'Address', 'gravityformsmailchimp' ),
+		                         'required' => false,
+		                         'type'     => 'address',
+		);
+		$merge_fields[] = array( 'tag'      => 'zipcode',
+		                         'name'     => __( 'Zipcode', 'gravityformsmailchimp' ),
+		                         'required' => false,
+		                         'type'     => 'address',
+		);
+		$merge_fields[] = array( 'tag'      => 'city',
+		                         'name'     => __( 'City', 'gravityformsmailchimp' ),
+		                         'required' => false,
+		                         'type'     => 'address',
+		);
+		$merge_fields[] = array( 'tag'      => 'country',
+		                         'name'     => __( 'Country', 'gravityformsmailchimp' ),
+		                         'required' => false,
+		                         'type'     => 'address',
+		);
+		$merge_fields[] = array( 'tag'      => 'phone',
+		                         'name'     => __( 'Phone', 'gravityformsmailchimp' ),
+		                         'required' => false,
+		                         'type'     => null,
+		);
+		$merge_fields[] = array( 'tag'      => 'fax',
+		                         'name'     => __( 'Fax', 'gravityformsmailchimp' ),
+		                         'required' => false,
+		                         'type'     => null,
+		);
+		$merge_fields[] = array( 'tag'      => 'mobile',
+		                         'name'     => __( 'Mobile', 'gravityformsmailchimp' ),
+		                         'required' => false,
+		                         'type'     => null,
+		);
+		$merge_fields[] = array( 'tag'      => 'website',
+		                         'name'     => __( 'Website', 'gravityformsmailchimp' ),
+		                         'required' => false,
+		                         'type'     => null,
+		);
+		$merge_fields[] = array( 'tag'      => 'language',
+		                         'name'     => __( 'Language', 'gravityformsmailchimp' ),
+		                         'required' => false,
+		                         'type'     => null,
+		);
+		$merge_fields[] = array( 'tag'      => 'gender',
+		                         'name'     => __( 'Gender', 'gravityformsmailchimp' ),
+		                         'required' => false,
+		                         'type'     => null,
+		);
+		$merge_fields[] = array( 'tag'      => 'birthday',
+		                         'name'     => __( 'Birthday', 'gravityformsmailchimp' ),
+		                         'required' => false,
+		                         'type'     => null,
+		);
+		$merge_fields[] = array( 'tag'      => 'company',
+		                         'name'     => __( 'Company', 'gravityformsmailchimp' ),
+		                         'required' => false,
+		                         'type'     => null,
+		);
+		$merge_fields[] = array( 'tag'      => 'function',
+		                         'name'     => __( 'Function', 'gravityformsmailchimp' ),
+		                         'required' => false,
+		                         'type'     => null,
+		);
+		$merge_fields[] = array( 'tag'      => 'market',
+		                         'name'     => __( 'Market', 'gravityformsmailchimp' ),
+		                         'required' => false,
+		                         'type'     => null,
+		);
+		$merge_fields[] = array( 'tag'      => 'employees',
+		                         'name'     => __( 'Employees', 'gravityformsmailchimp' ),
+		                         'required' => false,
+		                         'type'     => null,
+		);
+		$merge_fields[] = array( 'tag'      => 'nace',
+		                         'name'     => __( 'Nace', 'gravityformsmailchimp' ),
+		                         'required' => false,
+		                         'type'     => null,
+		);
+		$merge_fields[] = array( 'tag'      => 'turnover',
+		                         'name'     => __( 'Turnover', 'gravityformsmailchimp' ),
+		                         'required' => false,
+		                         'type'     => null,
+		);
+		$merge_fields[] = array( 'tag'      => 'vat',
+		                         'name'     => __( 'Vat', 'gravityformsmailchimp' ),
+		                         'required' => false,
+		                         'type'     => null,
+		);
+		$merge_fields[] = array( 'tag'      => 'keywords',
+		                         'name'     => __( 'Keywords', 'gravityformsmailchimp' ),
+		                         'required' => false,
+		                         'type'     => null,
+		);
+		$merge_fields[] = array( 'tag'      => 'free_field_1',
+		                         'name'     => __( 'free_field_1', 'gravityformsmailchimp' ),
+		                         'required' => false,
+		                         'type'     => null,
+		);
+		$merge_fields[] = array( 'tag'      => 'free_field_2',
+		                         'name'     => __( 'free_field_2', 'gravityformsmailchimp' ),
+		                         'required' => false,
+		                         'type'     => null,
+		);
+		$merge_fields[] = array( 'tag'      => 'free_field_3',
+		                         'name'     => __( 'free_field_3', 'gravityformsmailchimp' ),
+		                         'required' => false,
+		                         'type'     => null,
+		);
+		$merge_fields[] = array( 'tag'      => 'free_field_4',
+		                         'name'     => __( 'free_field_4', 'gravityformsmailchimp' ),
+		                         'required' => false,
+		                         'type'     => null,
+		);
+		$merge_fields[] = array( 'tag'      => 'free_field_5',
+		                         'name'     => __( 'free_field_5', 'gravityformsmailchimp' ),
+		                         'required' => false,
+		                         'type'     => null,
+		);
+		$merge_fields[] = array( 'tag'      => 'free_field_6',
+		                         'name'     => __( 'free_field_6', 'gravityformsmailchimp' ),
+		                         'required' => false,
+		                         'type'     => null,
+		);
+		$merge_fields[] = array( 'tag'      => 'barcode',
+		                         'name'     => __( 'Barcode', 'gravityformsmailchimp' ),
+		                         'required' => false,
+		                         'type'     => null,
+		);
 
-        // If merge fields exist, add to field map.
-        if ( ! empty( $merge_fields ) ) {
+		// If merge fields exist, add to field map.
+		if ( ! empty( $merge_fields ) ) {
 
-            // Loop through merge fields.
-            foreach ( $merge_fields as $merge_field ) {
+			// Loop through merge fields.
+			foreach ( $merge_fields as $merge_field ) {
 
-                // Define required field type.
-                $field_type = null;
+				// Define required field type.
+				$field_type = null;
 
-                // If this is an email merge field, set field types to "email" or "hidden".
-                if ( 'EMAIL' === strtoupper( $merge_field['tag'] ) ) {
-                    $field_type = array( 'email', 'hidden' );
-                }
+				// If this is an email merge field, set field types to "email" or "hidden".
+				if ( 'EMAIL' === strtoupper( $merge_field['tag'] ) ) {
+					$field_type = array( 'email', 'hidden' );
+				}
 
-                // If this is an address merge field, set field type to "address".
-                if ( 'address' === $merge_field['type'] ) {
-                    $field_type = array( 'address' );
-                }
+				// If this is an address merge field, set field type to "address".
+				if ( 'address' === $merge_field['type'] ) {
+					$field_type = array( 'address' );
+				}
 
-                // Add to field map.
-                $field_map[ $merge_field['tag'] ] = array(
-                    'name'       => $merge_field['tag'],
-                    'label'      => $merge_field['name'],
-                    'required'   => $merge_field['required'],
-                    'field_type' => $field_type,
-                );
+				// Add to field map.
+				$field_map[ $merge_field['tag'] ] = array(
+					'name'       => $merge_field['tag'],
+					'label'      => $merge_field['name'],
+					'required'   => $merge_field['required'],
+					'field_type' => $field_type,
+				);
 
-            }
+			}
 
-        }
+		}
 
 		return $field_map;
 	}
@@ -726,10 +851,10 @@ class GFFlexmail extends GFFeedAddOn {
 	/**
 	 * Prevent feeds being listed or created if the API key isn't valid.
 	 *
+	 * @return bool
 	 * @since  3.0
 	 * @access public
 	 *
-	 * @return bool
 	 */
 	public function can_create_feed() {
 
@@ -740,15 +865,15 @@ class GFFlexmail extends GFFeedAddOn {
 	/**
 	 * Configures which columns should be displayed on the feed list page.
 	 *
+	 * @return array
 	 * @since  3.0
 	 * @access public
 	 *
-	 * @return array
 	 */
 	public function feed_list_columns() {
 
 		return array(
-			'feedName'            => esc_html__( 'Name', 'gravityformsflexmail' )
+			'feedName' => esc_html__( 'Name', 'gravityformsflexmail' ),
 		);
 
 	}
@@ -756,16 +881,16 @@ class GFFlexmail extends GFFeedAddOn {
 	/**
 	 * Define which field types can be used for the group conditional logic.
 	 *
-	 * @since  3.0
-	 * @access public
-	 *
+	 * @return array
 	 * @uses GFAddOn::get_current_form()
 	 * @uses GFCommon::get_label()
 	 * @uses GF_Field::get_entry_inputs()
 	 * @uses GF_Field::get_input_type()
 	 * @uses GF_Field::is_conditional_logic_supported()
 	 *
-	 * @return array
+	 * @since  3.0
+	 * @access public
+	 *
 	 */
 	public function get_conditional_logic_fields() {
 
@@ -828,14 +953,14 @@ class GFFlexmail extends GFFeedAddOn {
 	/**
 	 * Process the feed, subscribe the user to the list.
 	 *
+	 * @param  array  $feed  The feed object to be processed.
+	 * @param  array  $entry  The entry object currently being processed.
+	 * @param  array  $form  The form object currently being processed.
+	 *
+	 * @return array
 	 * @since  3.0
 	 * @access public
 	 *
-	 * @param array $feed  The feed object to be processed.
-	 * @param array $entry The entry object currently being processed.
-	 * @param array $form  The form object currently being processed.
-	 *
-	 * @return array
 	 */
 	public function process_feed( $feed, $entry, $form ) {
 		// Log that we are processing feed.
@@ -843,7 +968,9 @@ class GFFlexmail extends GFFeedAddOn {
 
 		// If unable to initialize API, log error and return.
 		if ( ! $this->initialize_api() ) {
-			$this->add_feed_error( esc_html__( 'Unable to process feed because API could not be initialized.', 'gravityformsflexmail' ), $feed, $entry, $form );
+			$this->add_feed_error( esc_html__( 'Unable to process feed because API could not be initialized.',
+				'gravityformsflexmail' ), $feed, $entry, $form );
+
 			return $entry;
 		}
 
@@ -858,7 +985,9 @@ class GFFlexmail extends GFFeedAddOn {
 
 		// If email address is invalid, log error and return.
 		if ( GFCommon::is_invalid_or_empty_email( $email ) ) {
-			$this->add_feed_error( esc_html__( 'A valid Email address must be provided.', 'gravityformsflexmail' ), $feed, $entry, $form );
+			$this->add_feed_error( esc_html__( 'A valid Email address must be provided.', 'gravityformsflexmail' ),
+				$feed, $entry, $form );
+
 			return $entry;
 		}
 
@@ -866,12 +995,13 @@ class GFFlexmail extends GFFeedAddOn {
 		 * Prevent empty form fields erasing values already stored in the mapped Flexmail MMERGE fields
 		 * when updating an existing subscriber.
 		 *
-		 * @param bool  $override If the merge field should be overridden.
-		 * @param array $form     The form object.
-		 * @param array $entry    The entry object.
-		 * @param array $feed     The feed object.
+		 * @param  bool  $override  If the merge field should be overridden.
+		 * @param  array  $form  The form object.
+		 * @param  array  $entry  The entry object.
+		 * @param  array  $feed  The feed object.
 		 */
-		$override_empty_fields = gf_apply_filters( 'gform_flexmail_override_empty_fields', array( $form['id'] ), true, $form, $entry, $feed );
+		$override_empty_fields = gf_apply_filters( 'gform_flexmail_override_empty_fields', array( $form['id'] ), true,
+			$form, $entry, $feed );
 
 		// Log that empty fields will not be overridden.
 		if ( ! $override_empty_fields ) {
@@ -903,73 +1033,72 @@ class GFFlexmail extends GFFeedAddOn {
 				continue;
 			}
 
-			if( !empty( $field_value ) )
-                $merge_vars[ $name ] = $field_value;
+			if ( ! empty( $field_value ) ) {
+				$merge_vars[ $name ] = $field_value;
+			}
 
 		}
 
 		// Define initial member found and member status variables.
 		$member_found  = false;
 		$member_status = null;
-        $member_id = null;
+		$member_id     = null;
 
-        $contact_api = new FlexmailAPI_Contact();
+		$contact_api = new FlexmailAPI_Contact();
 
-        // set parameters
-        $parameters = array(
-            'mailingListIds' => array($feed['meta']['flexmailList']),
-            'emailAddressTypeItems' => array(
-                array('emailAddress' => $email, 'mailingListid' => $feed['meta']['flexmailList'])
-            )
-        );
+		// set parameters
+		$parameters = array(
+			'mailingListIds'        => array( $feed['meta']['flexmailList'] ),
+			'emailAddressTypeItems' => array(
+				array( 'emailAddress' => $email, 'mailingListid' => $feed['meta']['flexmailList'] ),
+			),
+		);
 
 		try {
 			// Log that we are checking if user is already subscribed to list.
 			$this->log_debug( __METHOD__ . "(): Checking to see if $email is already on the list." );
 
 			// Get member info.
-            $member = $contact_api->getAll($parameters);
+			$member = $contact_api->getAll( $parameters );
 
-            // no error code
-            if( $member->header->errorCode === 0 )
-            {
-                // checking emailadres
-                if( sizeof($member->emailAddressTypeItems) > 0 )
-                {
-                    // Get the first email account
-                    $emailAddress = current( $member->emailAddressTypeItems );
+			// no error code
+			if ( $member->header->errorCode === 0 ) {
+				// checking emailadres
+				if ( sizeof( $member->emailAddressTypeItems ) > 0 ) {
+					// Get the first email account
+					$emailAddress = current( $member->emailAddressTypeItems );
 
-                    // if no error code
-                    if( !isset( $emailAddress->errorCode ) )
-                    {
-                        // Set member found status to true.
-                        $member_found = true;
+					// if no error code
+					if ( ! isset( $emailAddress->errorCode ) ) {
+						// Set member found status to true.
+						$member_found = true;
 
-                        // Set member status.
-                        $member_status = $emailAddress->state;
+						// Set member status.
+						$member_status = $emailAddress->state;
 
-                        $member_id = $emailAddress->flexmailId;
+						$member_id = $emailAddress->flexmailId;
 
-                        $merge_vars['flexmailId'] = $emailAddress->flexmailId;
-                    }
-                }
-            }else{
-                Throw new Exception($member->header->errorMessage, $member->header->errorCode);
-            }
+						$merge_vars['flexmailId'] = $emailAddress->flexmailId;
+					}
+				}
+			} else {
+				throw new Exception( $member->header->errorMessage, $member->header->errorCode );
+			}
 
 		} catch ( Exception $e ) {
 
 			// If the exception code is not 404, abort feed processing.
 			if ( 404 !== $e->getCode() ) {
 
-			    if( 225 === $e->getCode() )
-                {
-                    // Log that we could not get the member information.
-                    $this->add_feed_error( sprintf( esc_html__( 'Email address is not added to the list: %s', 'gravityformsflexmail' ), $e->getMessage() ), $feed, $entry, $form );
-                }else{
-                    // Log that we could not get the member information.
-                    $this->add_feed_error( sprintf( esc_html__( 'Unable to check if email address is already used by a member: %s', 'gravityformsflexmail' ), $e->getMessage() ), $feed, $entry, $form );
-                }
+				if ( 225 === $e->getCode() ) {
+					// Log that we could not get the member information.
+					$this->add_feed_error( sprintf( esc_html__( 'Email address is not added to the list: %s',
+						'gravityformsflexmail' ), $e->getMessage() ), $feed, $entry, $form );
+				} else {
+					// Log that we could not get the member information.
+					$this->add_feed_error( sprintf( esc_html__( 'Unable to check if email address is already used by a member: %s',
+						'gravityformsflexmail' ), $e->getMessage() ), $feed, $entry, $form );
+				}
 
 				return $entry;
 			}
@@ -978,14 +1107,15 @@ class GFFlexmail extends GFFeedAddOn {
 		// if member status is not active and not null
 		if ( 'active' !== $member_status && null !== $member_status ) {
 			$this->log_debug( __METHOD__ . '(): User has different status and resubscription is not allowed.' );
+
 			return;
 		}
 
 		// Prepare subscription arguments.
-        $subscription = array(
-            'mailingListId' => $feed['meta']['flexmailList'],
-            'emailAddressType' => $merge_vars
-        );
+		$subscription = array(
+			'mailingListId'    => $feed['meta']['flexmailList'],
+			'emailAddressType' => $merge_vars,
+		);
 
 		// Prepare transaction type for filter.
 		$transaction = $member_found ? 'updated' : 'subscribed';
@@ -993,48 +1123,51 @@ class GFFlexmail extends GFFeedAddOn {
 		/**
 		 * Modify the subscription object before it is executed.
 		 *
+		 * @param  array  $subscription  Subscription arguments.
+		 * @param  array  $form  The form object.
+		 * @param  array  $entry  The entry object.
+		 * @param  array  $feed  The feed object.
+		 * @param  string  $transaction  Transaction type. Defaults to Subscribe.
+		 *
 		 * @deprecated 4.0 @use gform_flexmail_subscription
 		 *
-		 * @param array  $subscription Subscription arguments.
-		 * @param array  $form         The form object.
-		 * @param array  $entry        The entry object.
-		 * @param array  $feed         The feed object.
-		 * @param string $transaction  Transaction type. Defaults to Subscribe.
 		 */
-		$subscription = gf_apply_filters( array( 'gform_flexmail_args_pre_subscribe', $form['id'] ), $subscription, $form, $entry, $feed, $transaction );
+		$subscription = gf_apply_filters( array( 'gform_flexmail_args_pre_subscribe', $form['id'] ), $subscription,
+			$form, $entry, $feed, $transaction );
 
 		try {
 			// Log the subscriber to be added or updated.
 			$this->log_debug( __METHOD__ . "(): Subscriber to be {$transaction}: " . print_r( $subscription, true ) );
 
-            if( $transaction === 'updated' )
-            {
-                $contact_api->update($subscription);
-            }else{
-                $contact_api->create($subscription);
-            }
+			if ( $transaction === 'updated' ) {
+				$contact_api->update( $subscription );
+			} else {
+				$contact_api->create( $subscription );
+			}
 
 			// Log that the subscription was added or updated.
 			$this->log_debug( __METHOD__ . "(): Subscriber successfully {$transaction}." );
 
 		} catch ( Exception $e ) {
 			// Log that subscription could not be added or updated.
-			$this->add_feed_error( sprintf( esc_html__( 'Unable to add/update subscriber: %s', 'gravityformsflexmail' ), $e->getMessage() ), $feed, $entry, $form );
+			$this->add_feed_error( sprintf( esc_html__( 'Unable to add/update subscriber: %s', 'gravityformsflexmail' ),
+				$e->getMessage() ), $feed, $entry, $form );
 
 
-            return;
-        }
+			return;
+		}
 	}
 
 	/**
 	 * Returns the value of the selected field.
 	 *
+	 * @param  array  $form  The form object currently being processed.
+	 * @param  array  $entry  The entry object currently being processed.
+	 * @param  string  $field_id  The ID of the field being processed.
+	 *
+	 * @return array
 	 * @since  3.0
 	 * @access public
-	 *
-	 * @param array  $form     The form object currently being processed.
-	 * @param array  $entry    The entry object currently being processed.
-	 * @param string $field_id The ID of the field being processed.
 	 *
 	 * @uses GFAddOn::get_full_name()
 	 * @uses GF_Field::get_value_export()
@@ -1043,7 +1176,6 @@ class GFFlexmail extends GFFeedAddOn {
 	 * @uses GFFlexmail::get_full_address()
 	 * @uses GFFlexmail::maybe_override_field_value()
 	 *
-	 * @return array
 	 */
 	public function get_field_value( $form, $entry, $field_id ) {
 
@@ -1092,12 +1224,12 @@ class GFFlexmail extends GFFeedAddOn {
 						// Get full address for field value.
 						$field_value = $this->get_full_address( $entry, $field_id );
 
-					} else if ( $is_integer && 'name' === $input_type ) {
+					} elseif ( $is_integer && 'name' === $input_type ) {
 
 						// Get full name for field value.
 						$field_value = $this->get_full_name( $entry, $field_id );
 
-					} else if ( $is_integer && 'checkbox' === $input_type ) {
+					} elseif ( $is_integer && 'checkbox' === $input_type ) {
 
 						// Initialize selected options array.
 						$selected = array();
@@ -1106,21 +1238,23 @@ class GFFlexmail extends GFFeedAddOn {
 						foreach ( $field->inputs as $input ) {
 							$index = (string) $input['id'];
 							if ( ! rgempty( $index, $entry ) ) {
-								$selected[] = $this->maybe_override_field_value( rgar( $entry, $index ), $form, $entry, $index );
+								$selected[] = $this->maybe_override_field_value( rgar( $entry, $index ), $form, $entry,
+									$index );
 							}
 						}
 
 						// Convert selected options array to comma separated string.
 						$field_value = implode( ', ', $selected );
 
-					} else if ( 'phone' === $input_type && $field->phoneFormat == 'standard' ) {
+					} elseif ( 'phone' === $input_type && $field->phoneFormat == 'standard' ) {
 
 						// Get field value.
 						$field_value = rgar( $entry, $field_id );
 
 						// Reformat standard format phone to match Flexmail format.
 						// Format: NPA-NXX-LINE (404-555-1212) when US/CAN.
-						if ( ! empty( $field_value ) && preg_match( '/^\D?(\d{3})\D?\D?(\d{3})\D?(\d{4})$/', $field_value, $matches ) ) {
+						if ( ! empty( $field_value ) && preg_match( '/^\D?(\d{3})\D?\D?(\d{3})\D?(\d{4})$/',
+								$field_value, $matches ) ) {
 							$field_value = sprintf( '%s-%s-%s', $matches[1], $matches[2], $matches[3] );
 						}
 
@@ -1151,19 +1285,20 @@ class GFFlexmail extends GFFeedAddOn {
 	/**
 	 * Use the legacy gform_flexmail_field_value filter instead of the framework gform_SLUG_field_value filter.
 	 *
+	 * @param  string  $field_value  The field value.
+	 * @param  array  $form  The form object currently being processed.
+	 * @param  array  $entry  The entry object currently being processed.
+	 * @param  string  $field_id  The ID of the field being processed.
+	 *
+	 * @return string
 	 * @since  3.0
 	 * @access public
 	 *
-	 * @param string $field_value The field value.
-	 * @param array  $form        The form object currently being processed.
-	 * @param array  $entry       The entry object currently being processed.
-	 * @param string $field_id    The ID of the field being processed.
-	 *
-	 * @return string
 	 */
 	public function maybe_override_field_value( $field_value, $form, $entry, $field_id ) {
 
-		return gf_apply_filters( 'gform_flexmail_field_value', array( $form['id'], $field_id ), $field_value, $form['id'], $field_id, $entry, $this->merge_var_name );
+		return gf_apply_filters( 'gform_flexmail_field_value', array( $form['id'], $field_id ), $field_value,
+			$form['id'], $field_id, $entry, $this->merge_var_name );
 
 	}
 
@@ -1176,17 +1311,17 @@ class GFFlexmail extends GFFeedAddOn {
 	/**
 	 * Initializes Flexmail API if credentials are valid.
 	 *
-	 * @since  4.0
-	 * @access public
+	 * @param  string  $api_key  Flexmail API key.
 	 *
-	 * @param string $api_key Flexmail API key.
-	 *
+	 * @return bool|null
 	 * @uses GFAddOn::get_plugin_setting()
 	 * @uses GFAddOn::log_debug()
 	 * @uses GFAddOn::log_error()
 	 * @uses GF_Flexmail_API::account_details()
 	 *
-	 * @return bool|null
+	 * @since  4.0
+	 * @access public
+	 *
 	 */
 	public function initialize_api( $api_key = null ) {
 
@@ -1209,19 +1344,18 @@ class GFFlexmail extends GFFeedAddOn {
 		$this->log_debug( __METHOD__ . '(): Validating API Info.' );
 
 		// Setup a new Flexmail object with the API credentials.
-        $mc = new FlexmailAPI_Account();
+		$mc = new FlexmailAPI_Account();
 
 		try {
-		    // check user logged in
-            $lists = $mc->getBalance();
+			// check user logged in
+			$lists = $mc->getBalance();
 
-            if( $lists->header->errorCode !== 0 )
-            {
-                // Log that authentication test failed.
-                $this->log_error( __METHOD__ . '(): Unable to authenticate with Flexmail; '.$lists->header->errorMessage );
+			if ( $lists->header->errorCode !== 0 ) {
+				// Log that authentication test failed.
+				$this->log_error( __METHOD__ . '(): Unable to authenticate with Flexmail; ' . $lists->header->errorMessage );
 
-                return false;
-            }
+				return false;
+			}
 
 			// Log that authentication test passed.
 			$this->log_debug( __METHOD__ . '(): Flexmail successfully authenticated.' );
@@ -1231,7 +1365,7 @@ class GFFlexmail extends GFFeedAddOn {
 		} catch ( Exception $e ) {
 
 			// Log that authentication test failed.
-			$this->log_error( __METHOD__ . '(): Unable to authenticate with Flexmail; '. $e->getMessage() );
+			$this->log_error( __METHOD__ . '(): Unable to authenticate with Flexmail; ' . $e->getMessage() );
 
 			return false;
 
@@ -1246,13 +1380,13 @@ class GFFlexmail extends GFFeedAddOn {
 	 * If other inputs are missing Flexmail will not store the field value, we will pass a hyphen when an input is empty.
 	 * Flexmail requires the inputs be delimited by 2 spaces.
 	 *
+	 * @param  array  $entry  The entry currently being processed.
+	 * @param  string  $field_id  The ID of the field to retrieve the value for.
+	 *
+	 * @return array|null
 	 * @since  3.0
 	 * @access public
 	 *
-	 * @param array  $entry    The entry currently being processed.
-	 * @param string $field_id The ID of the field to retrieve the value for.
-	 *
-	 * @return array|null
 	 */
 	public function get_full_address( $entry, $field_id ) {
 
